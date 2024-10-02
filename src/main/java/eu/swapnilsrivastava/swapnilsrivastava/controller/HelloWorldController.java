@@ -34,13 +34,23 @@ public class HelloWorldController {
     }
 
     @GetMapping("/call-heroku-service")
-    public ResponseEntity<String> callGcpService() {
+    public ResponseEntity<String> callHerokuService() {
         String herokuService2Url = "https://spring-hackfestival2024-df62fb596841.herokuapp.com/call-heroku-service";
         
         ResponseEntity<String> response = restTemplate.getForEntity(herokuService2Url, String.class);
         String message = response.getBody();
         
         return ResponseEntity.ok("Message from Heroku Service: " + message);
+    }
+
+    @GetMapping("/call-guess-number-service")
+    public ResponseEntity<String> callGuessService() {
+        String guessNumberService2Url = "https://guess-a-number.azurewebsites.net/hack/0";
+        
+        ResponseEntity<String> response = restTemplate.getForEntity(guessNumberService2Url, String.class);
+        String message = response.getBody();
+        
+        return ResponseEntity.ok("Message from Guess Number Service: " + message);
     }
     
 }
