@@ -1,12 +1,17 @@
 package eu.swapnilsrivastava.swapnilsrivastava.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class HelloWorldController {
 
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping("/hello-gcp")
     public String HelloWorldSprings() {
@@ -26,6 +31,16 @@ public class HelloWorldController {
     @GetMapping(value = "/message", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getMessage() {
         return "Hello from the microservice! :: Working";
+    }
+
+    @GetMapping("/call-heroku-service")
+    public ResponseEntity<String> callGcpService() {
+        String herokuService2Url = "https://spring-hackfestival2024-df62fb596841.herokuapp.com/call-heroku-service";
+        
+        ResponseEntity<String> response = restTemplate.getForEntity(herokuService2Url, String.class);
+        String message = response.getBody();
+        
+        return ResponseEntity.ok("Message from Heroku Service: " + message);
     }
     
 }
