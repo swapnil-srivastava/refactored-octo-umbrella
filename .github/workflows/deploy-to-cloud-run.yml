@@ -32,5 +32,5 @@ jobs:
           --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:${{ secrets.DOCKERHUB_TAG_NAME }} \
           --platform managed \
           --region ${{ secrets.GCP_REGION }} \
-          --allow-unauthenticated
+          --allow-unauthenticated \
           --no-cache
