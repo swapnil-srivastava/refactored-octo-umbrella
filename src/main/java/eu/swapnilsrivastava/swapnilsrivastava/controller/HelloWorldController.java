@@ -9,7 +9,7 @@ public class HelloWorldController {
 
     @GetMapping("/hello-gcp")
     public String HelloWorldSprings() {
-       return "hello world gcp";
+       return "hello world google cloud platform";
     }
 
     @GetMapping("/hello-world")
