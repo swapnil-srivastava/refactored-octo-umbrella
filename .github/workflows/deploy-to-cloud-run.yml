@@ -32,4 +32,6 @@ jobs:
           --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:${{ secrets.DOCKERHUB_TAG_NAME }} \
           --platform managed \
           --region ${{ secrets.GCP_REGION }} \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --set-env-vars SPRING_PROFILES_ACTIVE=prod,JDBC_DATABASE_URL=${{ secrets.JDBC_DATABASE_URL }},JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }},JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }} \
+          --port 8080
