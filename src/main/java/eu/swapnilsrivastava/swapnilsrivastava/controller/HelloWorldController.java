@@ -15,22 +15,22 @@ public class HelloWorldController {
 
     @GetMapping("/hello-gcp")
     public String HelloWorldSprings() {
-       return "hello world google cloud platform :: Working";
+       return "hello world google cloud platform :: Working :: added dependencies";
     }
 
     @GetMapping("/hello-world")
     public String HelloWorld() {
-        return "Hello world :: Working";
+        return "Hello world :: Working :: added dependencies";
     }
 
     @GetMapping("/hello")
     public String Hello() {
-        return "Hello Hello :: Working";
+        return "Hello Hello :: Working :: added dependencies";
     }
 
     @GetMapping(value = "/message", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getMessage() {
-        return "Hello from the microservice! :: Working";
+        return "Hello from the microservice! :: Working :: added dependencies";
     }
 
     @GetMapping("/call-heroku-service")
