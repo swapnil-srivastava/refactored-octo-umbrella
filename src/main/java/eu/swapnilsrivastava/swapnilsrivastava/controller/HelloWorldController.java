@@ -25,7 +25,7 @@ public class HelloWorldController {
 
     @GetMapping("/hello")
     public String Hello() {
-        return "Hello Hello :: Working";
+        return "Hello Hello --> Working";
     }
 
     @GetMapping(value = "/message", produces = MediaType.APPLICATION_JSON_VALUE)
