@@ -20,7 +20,7 @@ public class HelloWorldController {
 
     @GetMapping("/hello-world")
     public String HelloWorld() {
-        return "Hello world :: Working";
+        return "Hello world --> Working";
     }
 
     @GetMapping("/hello")
