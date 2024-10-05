@@ -30,7 +30,7 @@ public class HelloWorldController {
 
     @GetMapping(value = "/message", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getMessage() {
-        return "Hello from the microservice! :: Working";
+        return "Hello from the microservice! --> Working";
     }
 
     @GetMapping("/call-heroku-service")
