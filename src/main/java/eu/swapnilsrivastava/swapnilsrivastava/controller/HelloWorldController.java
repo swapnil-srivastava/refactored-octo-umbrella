@@ -20,12 +20,12 @@ public class HelloWorldController {
 
     @GetMapping("/hello-world")
     public String HelloWorld() {
-        return "Hello world --> Working";
+        return "Hello world :: Working";
     }
 
     @GetMapping("/hello")
     public String Hello() {
-        return "Hello Hello --> Working";
+        return "Hello Hello :: Working";
     }
 
     @GetMapping(value = "/message", produces = MediaType.APPLICATION_JSON_VALUE)
