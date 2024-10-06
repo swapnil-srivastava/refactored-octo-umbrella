@@ -14,7 +14,7 @@ public class KafkaConsumerService {
     @Autowired
     private HelloWorldRepository helloWorldRepository;
 
-    @KafkaListener(topics = "hello_world_topic", groupId = "gcp-group-id")
+    @KafkaListener(topics = {"hello_world_topic"}, groupId = "gcp-group-id")
     @Transactional
     public void consume(String message) {
         System.out.println("Receiving message from topic" + message);
