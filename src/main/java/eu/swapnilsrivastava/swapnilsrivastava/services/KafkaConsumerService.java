@@ -14,14 +14,15 @@ public class KafkaConsumerService {
     @Autowired
     private HelloWorldRepository helloWorldRepository;
 
-    @KafkaListener(topics = {"hello_world_topic"}, groupId = "gcp-group-id")
+    @KafkaListener(topics = "hello_world_topic", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(String message) {
-        System.out.println("Receiving message from topic" + message);
-        HelloWorldModel helloWorld = new HelloWorldModel();
-        helloWorld.setName(message);
-        System.out.println("HelloWorldModel" + helloWorld.toString());
-
-        helloWorldRepository.save(helloWorld);
+        System.out.println("Received message: " + message);
+        
+        // Save the message to the database
+        HelloWorldModel helloWorldEntity = new HelloWorldModel();
+        helloWorldEntity.setName(message);
+        System.out.println("HelloWorldModel" + helloWorldEntity);
+        helloWorldRepository.save(helloWorldEntity);
         System.out.println("helloWorldRepository save called");
     }
     
