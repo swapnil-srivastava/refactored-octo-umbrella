@@ -31,7 +31,7 @@ public class KafkaConsumerService {
 
      private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
-    @KafkaListener(id = "myConsumer", topics = "hello_world_topic", groupId = "${spring.kafka.consumer.group-id}", autoStartup = "true")
+    @KafkaListener(topics = "hello_world_topic", groupId = "${spring.kafka.consumer.group-id}", autoStartup = "true")
     public void listen(String value,
         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
         @Header(KafkaHeaders.RECEIVED_KEY) String key) {
