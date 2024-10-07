@@ -29,7 +29,7 @@ jobs:
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy ${{ secrets.GCP_SERVICE_NAME }} \
-          --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:${{ secrets.DOCKERHUB_TAG_NAME }} \
+          --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:${{ github.sha }} \
           --platform managed \
           --region ${{ secrets.GCP_REGION }} \
           --add-cloudsql-instances=${{ secrets.CLOUDSQL_INSTANCE }} \
