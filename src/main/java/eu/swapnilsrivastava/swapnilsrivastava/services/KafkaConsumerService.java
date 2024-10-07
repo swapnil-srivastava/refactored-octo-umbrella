@@ -18,17 +18,7 @@ public class KafkaConsumerService {
     @Autowired
     private HelloWorldRepository helloWorldRepository;
 
-    // @KafkaListener(topics = "hello_world_topic", groupId = "${spring.kafka.consumer.group-id}")
-    // public void consume(String message) {
-    //     // Save the message to the database
-    //     HelloWorldModel helloWorldEntity = new HelloWorldModel();
-    //     helloWorldEntity.setName(message);
-    //     System.out.println("HelloWorldModel" + helloWorldEntity);
-    //     helloWorldRepository.save(helloWorldEntity);
-    //     System.out.println("helloWorldRepository save called");
-    // }
-
-     private final Logger logger = LoggerFactory.getLogger(Consumer.class);
+    private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
     @KafkaListener(topics = "hello_world_topic", groupId = "${spring.kafka.consumer.group-id}", autoStartup = "true")
     public void listen(String value,
