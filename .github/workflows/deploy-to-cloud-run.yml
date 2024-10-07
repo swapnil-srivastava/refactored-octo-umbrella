@@ -34,5 +34,4 @@ jobs:
           --region ${{ secrets.GCP_REGION }} \
           --add-cloudsql-instances=${{ secrets.CLOUDSQL_INSTANCE }} \
           --allow-unauthenticated \
-          --no-cpu-throttling \
           --set-env-vars JDBC_DATABASE_USERNAME=${{ secrets.JDBC_DATABASE_USERNAME }},JDBC_DATABASE_PASSWORD=${{ secrets.JDBC_DATABASE_PASSWORD }},JDBC_DATABASE_URL='${{ secrets.JDBC_DATABASE_URL }}',KAFKA_BOOTSTRAP_SERVER='${{ secrets.KAFKA_BOOTSTRAP_SERVER }}',CLUSTER_API_KEY='${{ secrets.CLUSTER_API_KEY }}',CLUSTER_API_SECRET='${{ secrets.CLUSTER_API_SECRET }}',DEPLOYMENT_TIMESTAMP=$(date +%s)
