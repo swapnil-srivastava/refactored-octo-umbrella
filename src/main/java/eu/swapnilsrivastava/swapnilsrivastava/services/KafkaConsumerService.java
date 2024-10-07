@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import eu.swapnilsrivastava.swapnilsrivastava.models.HelloWorldModel;
 import eu.swapnilsrivastava.swapnilsrivastava.repositories.HelloWorldRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 public class KafkaConsumerService {
@@ -42,7 +41,7 @@ public class KafkaConsumerService {
          helloWorldEntity.setName(value);
          System.out.println("HelloWorldModel" + helloWorldEntity);
          helloWorldRepository.save(helloWorldEntity);
-         System.out.println("helloWorldRepository save called");
+         System.out.println("helloWorldRepository save is called");
   }
     
 }
