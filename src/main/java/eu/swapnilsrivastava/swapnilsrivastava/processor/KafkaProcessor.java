@@ -23,18 +23,25 @@ public class KafkaProcessor {
     
     @Autowired
     public void process(StreamsBuilder builder) {
-        final Serde<String> stringSerde = Serdes.String();
-        final Serde<Long> longSerde = Serdes.Long();
-
-        KStream<String, String> textLines = builder.stream("shakespeare-topic", Consumed.with(stringSerde, stringSerde));
-
-        KTable<String, Long> wordCounts = textLines
-            .peek((key, value) -> logger.info("Received message - Key: {}, Value: {}", key, value))
-            .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
-            .groupBy((key, word) -> word)
-            .count();
-
-        wordCounts.toStream().to("streams-wordcount-output", Produced.with(stringSerde, longSerde));
+        try {
+            final Serde<String> stringSerde = Serdes.String();
+            final Serde<Long> longSerde = Serdes.Long();
+    
+            KStream<String, String> textLines = builder.stream("shakespeare-topic", Consumed.with(stringSerde, stringSerde));
+    
+            KTable<String, Long> wordCounts = textLines
+                .peek((key, value) -> logger.info("Received message - Key: {}, Value: {}", key, value))
+                .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
+                .groupBy((key, word) -> word)
+                .count();
+            
+            wordCounts.toStream().to("streams-wordcount-output", Produced.with(stringSerde, longSerde));
+            
+            logger.info("Kafka Streams topology built successfully");
+            
+        } catch (Exception e) {
+            logger.error("Error building Kafka Streams topology", e);
+        }
     }
 }
 
