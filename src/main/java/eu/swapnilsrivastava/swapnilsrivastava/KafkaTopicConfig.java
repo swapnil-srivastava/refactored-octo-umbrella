@@ -1,9 +1,11 @@
 package eu.swapnilsrivastava.swapnilsrivastava;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.common.config.SaslConfigs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,16 +28,18 @@ public class KafkaTopicConfig {
     @Value("${spring.kafka.properties.security.protocol}") 
       private String securityProtocol;
 
-    @Bean 
-    public KafkaAdmin admin() {
-      return new KafkaAdmin(Map.of(
-        AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress,
-        "**sasl.mechanism**", saslMechanism,
-        "**sasl.jaas.config**", salsJaasConfig,
-        "**security.protocol**", securityProtocol,
-        AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000",
-        AdminClientConfig.DEFAULT_API_TIMEOUT_MS_CONFIG, "60000"
-        ));
+    @Value("${spring.kafka.properties.sasl.jaas.config}") 
+    private String saslJaasConfig;
+
+
+    @Bean
+    public KafkaAdmin kafkaAdmin() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configs.put(AdminClientConfig.SECURITY_PROTOCOL_CONFIG, securityProtocol);
+        configs.put(SaslConfigs.SASL_MECHANISM, saslMechanism);
+        configs.put(SaslConfigs.SASL_JAAS_CONFIG, saslJaasConfig);
+        return new KafkaAdmin(configs);
     }
 
     @Bean
