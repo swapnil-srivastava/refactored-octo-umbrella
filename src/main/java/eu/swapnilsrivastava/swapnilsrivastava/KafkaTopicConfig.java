@@ -17,7 +17,11 @@ public class KafkaTopicConfig {
 
     @Bean 
     public KafkaAdmin admin() {
-      return new KafkaAdmin(Map.of(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers));
+      return new KafkaAdmin(Map.of(
+        AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+        AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, "30000",
+        AdminClientConfig.DEFAULT_API_TIMEOUT_MS_CONFIG, "60000"
+      ));
     }
 
     @Bean
