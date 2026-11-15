@@ -20,13 +20,13 @@ Spring Boot 3.3.4 on Java 21, built with Maven, targeting Google Cloud Run + Clo
 
 - `Java CI with Maven` runs on every push and pull request to `main`.
 - When it succeeds on `main`, `Publish Docker image` pushes `swapnilsrivastava/gcp` to Docker Hub.
-- **Merging to `main` deploys.** `Java CI with Maven` → `Publish Docker image` → `Deploy to Cloud Run` run in a chain, and the service is public (`--allow-unauthenticated`). `--no-cpu-throttling` is required so the Kafka listener keeps consuming; do not remove it.
+- **Merging to `main` deploys** (once CI is green). `Java CI with Maven` → `Publish Docker image` → `Deploy to Cloud Run` run in a chain, and the service is public (`--allow-unauthenticated`). `--no-cpu-throttling` is required so the Kafka listener keeps consuming; do not remove it.
 
 ## Things to know before changing anything
 
 - The `Dockerfile` base `openjdk:21-slim` matches Java 21. The `openjdk` images are deprecated; `eclipse-temurin:21-jre` is the usual replacement if the base ever needs changing.
 - `spring.jpa.hibernate.ddl-auto=update` is on: changing an `@Entity` changes the Cloud SQL schema on the next deploy. Treat entity changes as database changes and say so in the PR.
-- The app needs the database and Kafka env vars to start and there is no test profile, so the `@SpringBootTest` `contextLoads` test is expected to fail without them (not run in this session). Do not "fix" that by deleting the test; say it needs the env vars or add a test profile with H2 and `spring-kafka-test` (both already in the pom).
+- **CI is red on every push (seen 2026-11-15).** CI runs the `@SpringBootTest` `contextLoads` test against the real Cloud SQL instance, and GCP answers "The Cloud SQL instance does not exist", so the app cannot start. Because the chain stops at CI, nothing has been deployed since; the live service may also be down. Fixing it needs Swapnil: recreate the instance, or point the `JDBC_DATABASE_URL` secret (used by CI) and `CLOUDSQL_INSTANCE` (used by the deploy) at one that exists. Separately, tests should not need a real database: add a test profile with H2 and `spring-kafka-test` (both already in the pom). Never delete or skip the test to get green.
 - `spring.jpa.show-sql=true` and Kafka `DEBUG` logging are on and noisy/costly in Cloud Run logs.
 - Secrets (database, Kafka, Docker Hub, cloud keys) live in GitHub secrets or the cloud
   console. Never commit or print them; tell Swapnil which ones to add.
